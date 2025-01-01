@@ -1,0 +1,23 @@
+name: openweb_mcp
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:ollama
+    environment:
+      WEBUI_AUTH: False
+      NVIDIA_VISIBLE_DEVICES: all
+    volumes:
+      - ./docker-data/ollama:/root/.ollama
+      - ./docker-data/open-webui:/app/backend/data
+    ports:
+      - 3000:8080
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  ollama:
+  open-webui:
